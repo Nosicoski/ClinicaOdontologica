@@ -12,22 +12,23 @@ import static java.lang.Class.forName;
 
 public class H2Connection {
 
-    public String usuario = "sa";
-    public String Contraseña = "";
-    public String url = "jdbc:h2:~/test";
-    public String Drive_DB = "org.h2.Driver";
+    public static String usuario = "sa";
+    public static String Contraseña = "";
+    public static String url = "jdbc:h2:~/test";
+    public static String Drive_DB = "org.h2.Driver";
 
-    public Connection GetConexionDBH2(){
+    public  static Connection getConnection() throws SQLException{
         Connection connection=null;
-try {
-    Class.forName(Drive_DB);
-     connection= DriverManager.getConnection(url,usuario,Contraseña);
-    System.out.println("Conexion a la base de datos exitosa");
+        try {
+            Class.forName(Drive_DB);
+            connection = DriverManager.getConnection(url, usuario, Contraseña);
+            System.out.println("Conexion a la base de datos exitosa");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Driver no encontrado: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("Error en la conexión SQL: " + e.getMessage());
+        }
 
-} catch ( ClassNotFoundException | SQLException exception){
-    exception.printStackTrace();
-    System.out.println("Conexion a la base de datos fallida");
- }
         return connection;
     }
 }
