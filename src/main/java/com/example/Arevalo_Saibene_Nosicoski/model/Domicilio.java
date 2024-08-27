@@ -1,6 +1,22 @@
 package com.example.Arevalo_Saibene_Nosicoski.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "Domicilios")
+
 public class Domicilio {
+    @Id
+
     private Integer id;
     private String calle;
     private int numero;
@@ -8,7 +24,9 @@ public class Domicilio {
     private String provincia;
 
 
+
     public Domicilio(String calle, int numero, String localidad, String provincia) {
+
         this.calle = calle;
         this.numero = numero;
         this.localidad = localidad;
