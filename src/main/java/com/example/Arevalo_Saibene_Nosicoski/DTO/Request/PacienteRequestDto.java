@@ -1,5 +1,6 @@
-package com.example.Arevalo_Saibene_Nosicoski.DTO.Response;
+package com.example.Arevalo_Saibene_Nosicoski.DTO.Request;
 
+import com.example.Arevalo_Saibene_Nosicoski.model.Domicilio;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +12,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PacienteResponseDto {
-    private Long id;
+public class PacienteRequestDto {
     private String nombre;
     private String apellido;
     private int dni;
     private LocalDate fechaIngreso;
-
+    
 }
