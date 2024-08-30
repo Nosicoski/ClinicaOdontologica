@@ -12,15 +12,17 @@ public class OdontologoService {
 
     public OdontologoService(IOdontologoRepository iOdontologoRepository) {
         this.iOdontologoRepository = iOdontologoRepository;
+
     }
 
-    @Override
     public Odontologo guardarOdontologo(Odontologo odontologo) {
         return iOdontologoRepository.save(odontologo);
     }
 
-    @Override
+
     public Optional<Odontologo> buscarPorId(Integer id) {
         return iOdontologoRepository.findById(id);
     }
 }
+
+
