@@ -1,8 +1,10 @@
 package com.example.Arevalo_Saibene_Nosicoski.Controller;
 
 
+import com.example.Arevalo_Saibene_Nosicoski.DTO.Response.PacienteResponseDto;
 import com.example.Arevalo_Saibene_Nosicoski.model.Paciente;
 import com.example.Arevalo_Saibene_Nosicoski.service.impl.PacienteService;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.HttpStatusCode;
@@ -31,11 +33,11 @@ public class ControladorDePaciente {
 
     @GetMapping("/buscar/{id}")
     public ResponseEntity<?> buscarPorId(@PathVariable Integer id){
-        Optional<Paciente> paciente = pacienteService.buscarPorId(id);
+        Optional<PacienteResponseDto> paciente = pacienteService.buscarPorId(id);
         if(paciente.isPresent()){
             return ResponseEntity.ok(paciente.get());
         } else {
-            // ResponseEntity.status(HttpStatus.NOT_FOUND).body("paciente no encontrado");
+             ResponseEntity.status(HttpStatus.NOT_FOUND).body("paciente no encontrado");
             //ResponseEntity.notFound().build();
             return ResponseEntity.status(HttpStatusCode.valueOf(404)).build();
         }
@@ -50,7 +52,7 @@ public class ControladorDePaciente {
     public ResponseEntity<?> modificarPaciente(@RequestBody Paciente paciente){
         Optional <Paciente> pacienteEncontrado = pacienteService.buscarPorId(paciente.getId());
         if(pacienteEncontrado.isPresent()){
-            pacienteService.modificarPaciente(pacienteEncontrado.get());
+            pacienteService.actualizarPaciente(pacienteEncontrado.get());
             String jsonResponse = "{\"mensaje\": \"El paciente fue modificado\"}";
             return ResponseEntity.ok(jsonResponse);
         } else {
