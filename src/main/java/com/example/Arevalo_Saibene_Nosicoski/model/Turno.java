@@ -1,8 +1,6 @@
 package com.example.Arevalo_Saibene_Nosicoski.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,58 +15,16 @@ import java.time.LocalDate;
 @Table(name = "Turnos")
 public class Turno {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @ManyToOne
     private Paciente paciente;
+
+    @ManyToOne
     private Odontologo odontologo;
     private LocalDate fecha;
 
-    public Turno() {
-    }
-
-    public Turno(Paciente paciente, Odontologo odontologo, LocalDate fecha) {
-        this.paciente = paciente;
-        this.odontologo = odontologo;
-        this.fecha = fecha;
-    }
-
-    public Turno(Integer id, Paciente paciente, Odontologo odontologo, LocalDate fecha) {
-        this.id = id;
-        this.paciente = paciente;
-        this.odontologo = odontologo;
-        this.fecha = fecha;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Paciente getPaciente() {
-        return paciente;
-    }
-
-    public void setPaciente(Paciente paciente) {
-        this.paciente = paciente;
-    }
-
-    public Odontologo getOdontologo() {
-        return odontologo;
-    }
-
-    public void setOdontologo(Odontologo odontologo) {
-        this.odontologo = odontologo;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
 
     @Override
     public String toString() {
