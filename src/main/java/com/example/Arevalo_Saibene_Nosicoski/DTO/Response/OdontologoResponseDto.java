@@ -10,4 +10,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OdontologoResponseDto {
+    private Integer id;
+    private String nroMatricula;
+    private String apellido;
+    private String nombre;
 }
