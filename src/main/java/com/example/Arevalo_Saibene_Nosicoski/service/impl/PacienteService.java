@@ -2,6 +2,7 @@ package com.example.Arevalo_Saibene_Nosicoski.service.impl;
 
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Request.PacienteRequestDto;
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Response.PacienteResponseDto;
+import com.example.Arevalo_Saibene_Nosicoski.exception.ResourceNotFoundException;
 import com.example.Arevalo_Saibene_Nosicoski.model.Odontologo;
 
 import com.example.Arevalo_Saibene_Nosicoski.model.Paciente;
@@ -13,16 +14,20 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.events.Event;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PacienteService implements IPacienteService{
 
-    //Aca hago los atributos del logger
+
     private final Logger LOGGER = LoggerFactory.getLogger(PacienteService.class);
 
+    @Autowired
     private IPacienteRepository pacienteRepository;
 
     private ModelMapper modelMapper;
@@ -30,15 +35,15 @@ public class PacienteService implements IPacienteService{
     public PacienteService(IPacienteRepository pacienteRepository, ModelMapper modelMapper) {
         this.pacienteRepository = pacienteRepository;
         this.modelMapper = modelMapper;
-        configureMapping();
+
     }
 
 
     @Override
     public PacienteResponseDto guardarPaciente(PacienteRequestDto paciente) {
         LOGGER.info("Guardando paciente:".toString());
-        Paciente pacienteGuardado =IPacienteRepository.save(modelMapper.map(paciente,Paciente.class));
-        LOGGER.info("Paciente Guardado:".toString());
+        Paciente pacienteGuardado =pacienteRepository.save(modelMapper.map(paciente,Paciente.class));
+        LOGGER.info("Paciente Guardado: {}".toString());
 
         return modelMapper.map(pacienteGuardado,PacienteResponseDto.class);
     }
@@ -49,7 +54,8 @@ public class PacienteService implements IPacienteService{
     }
 
     @Override
-    public PacienteResponseDto buscarPacientePorId(Long id) {
+    public PacienteResponseDto buscarPorId(Integer id) {
+        pacienteRepository.getById(id);
         return null;
     }
 
@@ -59,7 +65,16 @@ public class PacienteService implements IPacienteService{
     }
 
     @Override
-    public void eliminarPaciente(Long id) {
+    public void eliminarPaciente(Integer id) {
+        if (!pacienteRepository.existsById(id)) {
+            try {
+                throw new ResourceNotFoundException("No se encontró el paciente a eliminar con id: " + id);
+            } catch (ResourceNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        pacienteRepository.deleteById(id);
+        LOGGER.info("Paciente eliminado con id: {}" + id);
 
     }
 }
