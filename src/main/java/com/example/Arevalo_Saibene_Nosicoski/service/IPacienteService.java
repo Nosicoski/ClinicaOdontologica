@@ -2,6 +2,7 @@ package com.example.Arevalo_Saibene_Nosicoski.service;
 
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Request.PacienteRequestDto;
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Response.PacienteResponseDto;
+import com.example.Arevalo_Saibene_Nosicoski.exception.ResourceNotFoundException;
 import com.example.Arevalo_Saibene_Nosicoski.model.Paciente;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,10 +14,10 @@ public interface IPacienteService  {
 
     List<PacienteResponseDto> listarPacientes();
 
-    PacienteResponseDto buscarPacientePorId(Long id);
+    PacienteResponseDto buscarPorId(Integer id);
 
-    PacienteResponseDto actualizarPaciente(PacienteRequestDto paciente,Long id) ;
+    PacienteResponseDto actualizarPaciente(PacienteRequestDto paciente,Long id) throws ResourceNotFoundException;
 
-    void eliminarPaciente(Long id);
+    void eliminarPaciente(Integer id)throws ResourceNotFoundException;
 
 }
