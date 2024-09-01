@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
+
 import java.util.Optional;
 
 @RestController
@@ -33,5 +35,4 @@ public class ControladorDeOdontologo {
         }
     }
 }
-
 
