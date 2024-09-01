@@ -1,6 +1,7 @@
 package com.example.Arevalo_Saibene_Nosicoski.DTO.Request;
 
 import com.example.Arevalo_Saibene_Nosicoski.model.Domicilio;
+import com.example.Arevalo_Saibene_Nosicoski.model.Paciente;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,7 @@ public class PacienteRequestDto {
     private String apellido;
     private int dni;
     private LocalDate fechaIngreso;
-    
+
+    public PacienteRequestDto(Paciente paciente) {
+    }
 }
