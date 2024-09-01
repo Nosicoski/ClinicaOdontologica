@@ -6,12 +6,21 @@ import com.example.Arevalo_Saibene_Nosicoski.model.Odontologo;
 import com.example.Arevalo_Saibene_Nosicoski.repository.IOdontologoRepository;
 
 import java.util.List;
+
+
+
 import java.util.Optional;
 
 public interface IOdontologoService {
     Odontologo guardarOdontologo(Odontologo odontologo);
 
     Optional<Odontologo> buscarPorId(Integer id);
+
+    void eliminarOdontologo(Integer id);
+    List<Odontologo> listarOdontologos();
+
+
+
 
     void eliminarOdontologo(Integer id);
 
@@ -24,4 +33,7 @@ public interface IOdontologoService {
     OdontologoResponseDto actualizarOdontologo(Integer id, OdontologoRequestDto requestDto);
 
     void eliminarOdontologoDto(Integer id);
+
 }
+
+

@@ -1,7 +1,11 @@
 package com.example.Arevalo_Saibene_Nosicoski.service.impl;
 
+import java.util.List;
+
+
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Request.OdontologoRequestDto;
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Response.OdontologoResponseDto;
+
 import com.example.Arevalo_Saibene_Nosicoski.model.Odontologo;
 import com.example.Arevalo_Saibene_Nosicoski.repository.IOdontologoRepository;
 import com.example.Arevalo_Saibene_Nosicoski.service.IOdontologoService;
@@ -12,22 +16,44 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+
+public class OdontologoService implements IOdontologoService  {
+    private final IOdontologoRepository iOdontologoRepository;
+
 public class OdontologoService {
     private IOdontologoRepository iOdontologoRepository;
+
 
     public OdontologoService(IOdontologoRepository iOdontologoRepository) {
         this.iOdontologoRepository = iOdontologoRepository;
 
     }
 
+    @Transactional
+    @Override
     public Odontologo guardarOdontologo(Odontologo odontologo) {
         return iOdontologoRepository.save(odontologo);
     }
 
-
-    public Optional<Odontologo> buscarPorId(Integer id) {
+    @Override
+public Optional<Odontologo> buscarPorId(Integer id) {
         return iOdontologoRepository.findById(id);
     }
+
+
+    @Transactional
+    @Override
+    public void eliminarOdontologo(Integer id) {
+        iOdontologoRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Odontologo> listarOdontologos() {
+        return iOdontologoRepository.findAll();
+    }
+}
+
+
 
     @Transactional
     public OdontologoResponseDto guardarOdontologo(OdontologoRequestDto requestDto) {
@@ -37,6 +63,13 @@ public class OdontologoService {
         // Errores a resolver en RequestDto       requestDto.getApellido(),
         // Errores a resolver en RequestDto       requestDto.getNombre()
         );
+
+
+
+
+
+
+
 
         Odontologo odontologoGuardado = iOdontologoRepository.save(odontologo);
 
@@ -94,3 +127,4 @@ public class OdontologoService {
         }
     }
 }
+
