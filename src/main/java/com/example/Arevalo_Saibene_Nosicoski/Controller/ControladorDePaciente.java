@@ -1,6 +1,7 @@
 package com.example.Arevalo_Saibene_Nosicoski.Controller;
 
 
+import com.example.Arevalo_Saibene_Nosicoski.DTO.Request.PacienteRequestDto;
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Response.PacienteResponseDto;
 import com.example.Arevalo_Saibene_Nosicoski.model.Paciente;
 import com.example.Arevalo_Saibene_Nosicoski.service.impl.PacienteService;
@@ -28,15 +29,16 @@ public class ControladorDePaciente {
     // ingresa -> JSON -> jackson -> Objeto Paciente
     // salga -> Objeto Paciente -> jackson -> JSON
     @PostMapping("/guardar")
-    public ResponseEntity<Paciente> guardarPaciente(@RequestBody Paciente paciente){
-        return ResponseEntity.ok(pacienteService.guardarPaciente(paciente));
+    public ResponseEntity<PacienteResponseDto> guardarPaciente(@RequestBody Paciente paciente){
+        return ResponseEntity.ok(pacienteService.guardarPaciente(new PacienteRequestDto()));
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable Integer id){
-        Optional<PacienteResponseDto> paciente = pacienteService.buscarPorId(id);
-        if(paciente.isPresent()){
-            return ResponseEntity.ok(paciente.get());
+    public ResponseEntity<PacienteResponseDto> buscarPorId(@PathVariable Integer id){
+        PacienteResponseDto paciente = pacienteService.buscarPorId(id);
+
+        if(paciente != null){
+            return ResponseEntity.ok(paciente);
         } else {
              ResponseEntity.status(HttpStatus.NOT_FOUND).body("paciente no encontrado");
             //ResponseEntity.notFound().build();
@@ -45,30 +47,43 @@ public class ControladorDePaciente {
     }
 
     @GetMapping("/buscartodos")
-    public ResponseEntity<List<Paciente>> buscarTodos(){
-        return ResponseEntity.ok(pacienteService.buscarTodos());
+    public ResponseEntity<List<PacienteResponseDto>> buscarTodos(){
+        return ResponseEntity.ok(pacienteService.listarPacientes());
     }
 
     @PutMapping("/modificar")
-    public ResponseEntity<?> modificarPaciente(@RequestBody Paciente paciente){
-        Optional <Paciente> pacienteEncontrado = pacienteService.buscarPorId(paciente.getId());
-        if(pacienteEncontrado.isPresent()){
-            pacienteService.actualizarPaciente(pacienteEncontrado.get());
+    public ResponseEntity<?> modificarPaciente(@RequestBody Paciente paciente)
+    {
+        PacienteResponseDto pacienteEncontrado = pacienteService.buscarPorId(paciente.getId());
+
+        if(pacienteEncontrado!= null)
+
+        {
+            pacienteService.actualizarPaciente(new PacienteRequestDto(paciente), paciente.getId());
             String jsonResponse = "{\"mensaje\": \"El paciente fue modificado\"}";
             return ResponseEntity.ok(jsonResponse);
-        } else {
+        }
+
+        else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<?> eliminarPaciente(@PathVariable Integer id){
-        Optional <Paciente> pacienteEncontrado = pacienteService.buscarPorId(id);
-        if(pacienteEncontrado.isPresent()){
+    public ResponseEntity<?> eliminarPaciente(@PathVariable Integer id)
+    {
+        PacienteResponseDto pacienteEncontrado = pacienteService.buscarPorId(id);
+
+        if(pacienteEncontrado !=null )
+
+        {
             pacienteService.eliminarPaciente(id);
             String jsonResponse = "{\"mensaje\": \"El paciente fue modificado\"}";
             return ResponseEntity.ok(jsonResponse);
-        } else {
+        }
+
+        else
+        {
             return ResponseEntity.notFound().build();
         }
     }
