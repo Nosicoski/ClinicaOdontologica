@@ -9,9 +9,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+
 public class OdontologoResponseDto {
     private Integer id;
     private String nroMatricula;
     private String apellido;
     private String nombre;
+
 }
+
+
+

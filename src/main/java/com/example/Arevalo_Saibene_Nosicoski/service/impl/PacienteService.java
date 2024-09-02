@@ -54,10 +54,11 @@ public class PacienteService implements IPacienteService{
     }
 
     @Override
-    public PacienteResponseDto buscarPorId(Integer id) {
-        pacienteRepository.getById(id);
+    public PacienteResponseDto buscarPorId(Long id) {
         return null;
     }
+
+
 
     @Override
     public PacienteResponseDto actualizarPaciente(PacienteRequestDto paciente, Long id) {
@@ -65,15 +66,15 @@ public class PacienteService implements IPacienteService{
     }
 
     @Override
-    public void eliminarPaciente(Integer id) {
-        if (!pacienteRepository.existsById(id)) {
+    public void eliminarPaciente(Long id) {
+        if (!pacienteRepository.existsById(Math.toIntExact(id))) {
             try {
                 throw new ResourceNotFoundException("No se encontró el paciente a eliminar con id: " + id);
             } catch (ResourceNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
-        pacienteRepository.deleteById(id);
+        pacienteRepository.deleteById(Math.toIntExact(id));
         LOGGER.info("Paciente eliminado con id: {}" + id);
 
     }
