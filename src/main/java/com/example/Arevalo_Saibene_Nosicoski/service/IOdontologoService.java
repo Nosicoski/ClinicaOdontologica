@@ -12,27 +12,18 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IOdontologoService {
-    Odontologo guardarOdontologo(Odontologo odontologo);
 
-    Optional<Odontologo> buscarPorId(Integer id);
-
-    void eliminarOdontologo(Integer id);
-    List<Odontologo> listarOdontologos();
-
-
-
-
-    void eliminarOdontologo(Integer id);
-
-    List<Odontologo> listarOdontologos();
+    void eliminarOdontologoDto(Integer id);
 
     List<OdontologoResponseDto> listarOdontologosDto();
-    Optional<OdontologoResponseDto> buscarDtoPorId(Integer id);
+
+    Optional<OdontologoResponseDto> buscarPorId(Integer id);
+
     OdontologoResponseDto guardarOdontologo(OdontologoRequestDto requestDto);
 
     OdontologoResponseDto actualizarOdontologo(Integer id, OdontologoRequestDto requestDto);
 
-    void eliminarOdontologoDto(Integer id);
+
 
 }
 

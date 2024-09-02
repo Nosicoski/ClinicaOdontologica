@@ -1,6 +1,8 @@
 package com.example.Arevalo_Saibene_Nosicoski.Controller;
 
 
+import com.example.Arevalo_Saibene_Nosicoski.DTO.Request.OdontologoRequestDto;
+import com.example.Arevalo_Saibene_Nosicoski.DTO.Response.OdontologoResponseDto;
 import com.example.Arevalo_Saibene_Nosicoski.model.Odontologo;
 import com.example.Arevalo_Saibene_Nosicoski.service.impl.OdontologoService;
 import org.springframework.http.HttpStatusCode;
@@ -21,13 +23,13 @@ public class ControladorDeOdontologo {
     }
 
     @PostMapping("/guardar")
-    public ResponseEntity<Odontologo> agregarOdontologo(@RequestBody Odontologo odontologo){
-        return ResponseEntity.ok(odontologService.guardarOdontologo(odontologo));
+    public ResponseEntity<OdontologoResponseDto> agregarOdontologo(@RequestBody Odontologo odontologo){
+        return ResponseEntity.ok(odontologService.guardarOdontologo(new OdontologoRequestDto()));
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Odontologo> buscarPorId(@PathVariable Integer id){
-        Optional<Odontologo> odontologo = odontologService.buscarPorId(id);
+    public ResponseEntity<OdontologoResponseDto> buscarPorId(@PathVariable Integer id){
+        Optional<OdontologoResponseDto> odontologo = odontologService.buscarPorId(id);
         if(odontologo.isPresent()){
             return ResponseEntity.ok(odontologo.get());
         } else {
