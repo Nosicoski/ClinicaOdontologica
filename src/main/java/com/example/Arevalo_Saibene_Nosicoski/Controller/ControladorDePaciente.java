@@ -34,7 +34,9 @@ public class ControladorDePaciente {
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<PacienteResponseDto> buscarPorId(@PathVariable Long id){
+
+    public ResponseEntity<PacienteResponseDto> buscarPorId(@PathVariable Integer id){
+
         PacienteResponseDto paciente = pacienteService.buscarPorId(id);
 
         if(paciente != null){
@@ -70,7 +72,9 @@ public class ControladorDePaciente {
     }
 
     @DeleteMapping("/eliminar/{id}")
-        public ResponseEntity<?> eliminarPaciente(@PathVariable Long id)
+
+    public ResponseEntity<?> eliminarPaciente(@PathVariable Integer id)
+
     {
         PacienteResponseDto pacienteEncontrado = pacienteService.buscarPorId(id);
 
