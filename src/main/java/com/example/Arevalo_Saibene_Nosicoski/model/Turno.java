@@ -1,10 +1,7 @@
 package com.example.Arevalo_Saibene_Nosicoski.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 @Getter
@@ -13,6 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "Turnos")
+@Builder
 public class Turno {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

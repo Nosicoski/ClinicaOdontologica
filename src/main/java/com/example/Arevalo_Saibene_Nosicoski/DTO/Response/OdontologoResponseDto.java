@@ -1,15 +1,12 @@
 package com.example.Arevalo_Saibene_Nosicoski.DTO.Response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-
+@Builder
 public class OdontologoResponseDto {
     private Integer id;
     private String nroMatricula;

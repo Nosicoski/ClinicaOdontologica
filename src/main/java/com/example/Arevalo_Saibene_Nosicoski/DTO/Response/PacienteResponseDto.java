@@ -1,9 +1,6 @@
 package com.example.Arevalo_Saibene_Nosicoski.DTO.Response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -11,11 +8,12 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class PacienteResponseDto {
     private Long id;
     private String nombre;
     private String apellido;
     private int dni;
     private LocalDate fechaIngreso;
-
+    private DomicilioResponseDto domicilioResponseDto;
 }

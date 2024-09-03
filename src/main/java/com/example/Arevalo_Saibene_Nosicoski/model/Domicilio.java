@@ -1,16 +1,15 @@
 package com.example.Arevalo_Saibene_Nosicoski.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "Domicilios")
+@Builder
 
 public class Domicilio {
     @Id

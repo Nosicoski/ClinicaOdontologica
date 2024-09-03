@@ -37,7 +37,7 @@ public class ControladorDePaciente {
 
     public ResponseEntity<PacienteResponseDto> buscarPorId(@PathVariable Integer id){
 
-        PacienteResponseDto paciente = pacienteService.buscarPorId(id);
+        PacienteResponseDto paciente = pacienteService.buscarPorId(1L);
 
         if(paciente != null){
             return ResponseEntity.ok(paciente);
@@ -76,12 +76,12 @@ public class ControladorDePaciente {
     public ResponseEntity<?> eliminarPaciente(@PathVariable Integer id)
 
     {
-        PacienteResponseDto pacienteEncontrado = pacienteService.buscarPorId(id);
+        PacienteResponseDto pacienteEncontrado = pacienteService.buscarPorId(1L);
 
         if(pacienteEncontrado !=null )
 
         {
-            pacienteService.eliminarPaciente(id);
+            pacienteService.eliminarPaciente(1L);
             String jsonResponse = "{\"mensaje\": \"El paciente fue modificado\"}";
             return ResponseEntity.ok(jsonResponse);
         }
