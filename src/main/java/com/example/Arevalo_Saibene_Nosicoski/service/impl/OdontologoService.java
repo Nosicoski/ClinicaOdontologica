@@ -11,6 +11,7 @@ import com.example.Arevalo_Saibene_Nosicoski.model.Odontologo;
 import com.example.Arevalo_Saibene_Nosicoski.repository.IOdontologoRepository;
 import com.example.Arevalo_Saibene_Nosicoski.service.IOdontologoService;
 import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,11 +23,12 @@ import static org.springframework.boot.autoconfigure.liquibase.LiquibaseProperti
 @Service
 
 public class OdontologoService implements IOdontologoService {
-
+    private ModelMapper modelMapper;
     private final IOdontologoRepository iOdontologoRepository;
     private final Logger LOGGER = LoggerFactory.getLogger(PacienteService.class);
 
-        public OdontologoService(IOdontologoRepository iOdontologoRepository) {
+        public OdontologoService(ModelMapper modelMapper, IOdontologoRepository iOdontologoRepository) {
+            this.modelMapper = modelMapper;
             this.iOdontologoRepository = iOdontologoRepository;
 
         }
@@ -62,17 +64,17 @@ public class OdontologoService implements IOdontologoService {
     }
 
     @Override
-    public Optional<OdontologoResponseDto> buscarOdontologo(Integer id) {
-        return iOdontologoRepository.findById(id)
-                .map(odontologo -> new OdontologoResponseDto(
-                        odontologo.getId(),
-                        odontologo.getNroMatricula(),
-                        odontologo.getApellido(),
-                        odontologo.getNombre()));
+    public OdontologoResponseDto buscarOdontologo(Integer id) {
+        return iOdontologoRepository.findById(id).map(odontologo -> modelMapper.map(odontologo, OdontologoResponseDto.class))
+                .orElseGet(() -> {
+                    LOGGER.info("No se encontró el odontologo con id: {}"+ id);
+                    return null;
+                });
     }
     @Override
-    public List<OdontologoResponseDto> listarTodos() {
+    public List<OdontologoResponseDto> listarTodos( ) {
         return iOdontologoRepository.findAll().stream()
+
                 .map(odontologo -> new OdontologoResponseDto(
                         odontologo.getId(),
                         odontologo.getNroMatricula(),

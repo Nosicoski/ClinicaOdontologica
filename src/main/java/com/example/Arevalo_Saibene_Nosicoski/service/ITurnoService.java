@@ -1,17 +1,27 @@
 package com.example.Arevalo_Saibene_Nosicoski.service;
 
+import com.example.Arevalo_Saibene_Nosicoski.DTO.Request.TurnoRequestDto;
+import com.example.Arevalo_Saibene_Nosicoski.DTO.Response.TurnoResponseDto;
+import com.example.Arevalo_Saibene_Nosicoski.exception.BadRequestException;
+import com.example.Arevalo_Saibene_Nosicoski.exception.ResourceNotFoundException;
 import com.example.Arevalo_Saibene_Nosicoski.model.Turno;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public interface ITurnoService {
-    Turno guardarTurno(Turno turno);
 
-    Optional<Turno> buscarTurnoPorId(Integer id);
+    TurnoResponseDto registrarTurno(TurnoRequestDto turnoEntradaDTO) throws BadRequestException;
 
-    List<Turno> buscarTodosLosTurnos();
 
-    void modificarTurno(Turno turno);
-    void eliminarTurno(Integer id);
+    List<TurnoResponseDto> listarTurnos();
+
+
+    TurnoResponseDto buscarTurnoPorId(Integer id);
+
+    void eliminarTurno(Integer id) throws ResourceNotFoundException;
+
+
+    TurnoResponseDto actualizarTurno(TurnoRequestDto turnoEntradaDTO,Integer id) throws ResourceNotFoundException;
 }

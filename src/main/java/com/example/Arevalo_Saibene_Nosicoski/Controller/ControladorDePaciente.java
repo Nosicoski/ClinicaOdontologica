@@ -3,8 +3,10 @@ package com.example.Arevalo_Saibene_Nosicoski.Controller;
 
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Request.PacienteRequestDto;
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Response.PacienteResponseDto;
+import com.example.Arevalo_Saibene_Nosicoski.exception.ResourceNotFoundException;
 import com.example.Arevalo_Saibene_Nosicoski.model.Paciente;
 import com.example.Arevalo_Saibene_Nosicoski.service.impl.PacienteService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +31,7 @@ public class ControladorDePaciente {
     // ingresa -> JSON -> jackson -> Objeto Paciente
     // salga -> Objeto Paciente -> jackson -> JSON
     @PostMapping("/guardar")
-    public ResponseEntity<PacienteResponseDto> guardarPaciente(@RequestBody PacienteRequestDto pacienteRequestDto){
+    public ResponseEntity<PacienteResponseDto> guardarPaciente(@RequestBody @Valid PacienteRequestDto pacienteRequestDto){
         return ResponseEntity.ok(pacienteService.guardarPaciente(new PacienteRequestDto()));
     }
 
@@ -73,24 +75,11 @@ public class ControladorDePaciente {
 
     @DeleteMapping("/eliminar/{id}")
 
-    public ResponseEntity<?> eliminarPaciente(@PathVariable Integer id)
-
-    {
-        PacienteResponseDto pacienteEncontrado = pacienteService.buscarPorId(1L);
-
-        if(pacienteEncontrado !=null )
-
-        {
-            pacienteService.eliminarPaciente(1L);
-            String jsonResponse = "{\"mensaje\": \"El paciente fue modificado\"}";
-            return ResponseEntity.ok(jsonResponse);
-        }
-
-        else
-        {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<String> eliminarPaciente(@PathVariable Long id) throws ResourceNotFoundException {
+        pacienteService.eliminarPaciente(id);
+        return new ResponseEntity<>("Se borro correctamente el paciente", HttpStatus.NO_CONTENT);
+    }
     }
 
 
-}
+
