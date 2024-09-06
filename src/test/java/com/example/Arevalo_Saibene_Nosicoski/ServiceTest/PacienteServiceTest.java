@@ -31,6 +31,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
+
 class PacienteServiceImplTest {
 
     @Mock
@@ -103,7 +104,7 @@ class PacienteServiceImplTest {
 
     @Test
     void deberiaBuscarUnPacientePorId_YRetornarNull() {
-        when(pacienteRepository.findById((int) anyLong())).thenReturn(Optional.empty());
+        when(pacienteRepository.findById((int)).thenReturn(Optional.empty());
         PacienteResponseDto pacienteBuscado = pacienteService.buscarPorId(1L);
 
         verify(pacienteRepository, times(1)).findById(12);
