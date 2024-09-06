@@ -43,7 +43,7 @@ public class PacienteService implements IPacienteService{
     public PacienteResponseDto guardarPaciente(PacienteRequestDto paciente) {
         LOGGER.info("Guardando paciente:".toString());
         Paciente pacienteGuardado =pacienteRepository.save(modelMapper.map(paciente,Paciente.class));
-        LOGGER.info("Paciente Guardado: {}".toString());
+        LOGGER.info("Paciente Guardado: ".toString());
 
         return modelMapper.map(pacienteGuardado,PacienteResponseDto.class);
     }
@@ -67,15 +67,10 @@ public class PacienteService implements IPacienteService{
 
     @Override
     public void eliminarPaciente(Long id) {
-        if (!pacienteRepository.existsById(Math.toIntExact(id))) {
-            try {
-                throw new ResourceNotFoundException("No se encontró el paciente a eliminar con id: " + id);
-            } catch (ResourceNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        pacienteRepository.deleteById(Math.toIntExact(id));
-        LOGGER.info("Paciente eliminado con id: {}" + id);
+
+        if (pacienteRepository.findById(id).isEmpty()) throw new ResourceNotFoundException("No se encontró el paciente a eliminar con id: " + id);
+        pacienteRepository.deleteById(id);
+        LOGGER.info("Paciente eliminado con id:" + id);
 
     }
 }
