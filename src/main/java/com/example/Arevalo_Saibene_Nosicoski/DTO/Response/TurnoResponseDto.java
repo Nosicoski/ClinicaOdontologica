@@ -9,7 +9,7 @@ import lombok.*;
 @Builder
 public class TurnoResponseDto {
 
-    private Integer id;
+    private Long id;
     private PacienteResponseDto pacienteResponseDto;
     private  OdontologoResponseDto odontologoResponseDto;
     private String fecha;
