@@ -62,7 +62,7 @@ public class OdontologoService implements IOdontologoService {
     }
 
     @Override
-    public Optional<OdontologoResponseDto> buscarPorMatricula(Integer id) {
+    public Optional<OdontologoResponseDto> buscarOdontologo(Integer id) {
         return iOdontologoRepository.findById(id)
                 .map(odontologo -> new OdontologoResponseDto(
                         odontologo.getId(),

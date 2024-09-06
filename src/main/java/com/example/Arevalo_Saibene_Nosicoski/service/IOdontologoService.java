@@ -17,7 +17,7 @@ public interface IOdontologoService {
 
     List<OdontologoResponseDto> listarTodos();
 
-    Optional<OdontologoResponseDto> buscarPorMatricula(Integer id);
+    Optional<OdontologoResponseDto> buscarOdontologo(Integer id);
 
     OdontologoResponseDto guardarOdontologo(OdontologoRequestDto requestDto);
 
