@@ -18,7 +18,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping
+@RequestMapping ("/paciente")
 
 public class ControladorDePaciente {
     private PacienteService pacienteService;
@@ -29,7 +29,7 @@ public class ControladorDePaciente {
     // ingresa -> JSON -> jackson -> Objeto Paciente
     // salga -> Objeto Paciente -> jackson -> JSON
     @PostMapping("/guardar")
-    public ResponseEntity<PacienteResponseDto> guardarPaciente(@RequestBody Paciente paciente){
+    public ResponseEntity<PacienteResponseDto> guardarPaciente(@RequestBody PacienteRequestDto pacienteRequestDto){
         return ResponseEntity.ok(pacienteService.guardarPaciente(new PacienteRequestDto()));
     }
 

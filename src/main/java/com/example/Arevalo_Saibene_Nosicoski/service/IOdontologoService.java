@@ -15,9 +15,9 @@ public interface IOdontologoService {
 
     void eliminarOdontologoDto(Integer id);
 
-    List<OdontologoResponseDto> listarOdontologosDto();
+    List<OdontologoResponseDto> listarTodos();
 
-    Optional<OdontologoResponseDto> buscarPorId(Integer id);
+    Optional<OdontologoResponseDto> buscarPorMatricula(Integer id);
 
     OdontologoResponseDto guardarOdontologo(OdontologoRequestDto requestDto);
 
