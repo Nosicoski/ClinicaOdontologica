@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class Turno {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     private Paciente paciente;

@@ -42,7 +42,7 @@ public class PacienteService implements IPacienteService{
     @Override
     public PacienteResponseDto guardarPaciente(PacienteRequestDto paciente) {
         LOGGER.info("Guardando paciente:".toString());
-        Paciente pacienteGuardado =pacienteRepository.save(modelMapper.map(paciente,Paciente.class));
+        Paciente pacienteGuardado = pacienteRepository.save(modelMapper.map(paciente,Paciente.class));
         LOGGER.info("Paciente Guardado: ".toString());
 
         return modelMapper.map(pacienteGuardado,PacienteResponseDto.class);
