@@ -24,7 +24,7 @@ public class Paciente {
     private LocalDate fechaIngreso;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_domicilio")
+    @JoinColumn(name = "domicilio_id")
     private Domicilio domicilio;
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE)

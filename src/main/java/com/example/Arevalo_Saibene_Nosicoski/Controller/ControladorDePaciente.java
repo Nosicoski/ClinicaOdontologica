@@ -55,8 +55,21 @@ public class ControladorDePaciente {
     }
 
     @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<String> eliminarPaciente(@PathVariable Long id) throws ResourceNotFoundException {
-        pacienteService.eliminarPaciente(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> eliminarPaciente(@PathVariable Long id) {
+        try {
+            // Llama al servicio para eliminar el paciente
+            pacienteService.eliminarPaciente(id);
+            // Devuelve un estado 200 OK con un mensaje de confirmación
+            return ResponseEntity.ok("{\"mensaje\": \"Paciente eliminado con éxito\"}");
+        } catch (ResourceNotFoundException e) {
+            // Devuelve un estado 404 Not Found si el paciente no se encuentra
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"mensaje\": \"Paciente no encontrado\"}");
+        } catch (Exception e) {
+            // Devuelve un estado 500 Internal Server Error para otros errores inesperados
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"mensaje\": \"Error interno del servidor\"}");
+        }
     }
+
 }
