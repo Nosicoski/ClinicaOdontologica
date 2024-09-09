@@ -20,11 +20,11 @@ public class Paciente {
     private Long id;
     private String apellido;
     private String nombre;
-    private String dni;
+    private int dni;
     private LocalDate fechaIngreso;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_domicilio")
+    @JoinColumn(name = "domicilio_id")
     private Domicilio domicilio;
 
     @OneToMany(mappedBy = "paciente", cascade = CascadeType.REMOVE)
