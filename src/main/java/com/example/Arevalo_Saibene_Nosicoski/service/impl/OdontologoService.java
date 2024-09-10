@@ -49,18 +49,10 @@ public class OdontologoService implements IOdontologoService {
 
 
    @Override
-    public OdontologoResponseDto guardarOdontologo(OdontologoRequestDto requestDto) {
-        Odontologo odontologo = new Odontologo();
-        odontologo.setApellido(requestDto.getApellido());
-        odontologo.setNombre(requestDto.getNombre());
-        odontologo.setNroMatricula(requestDto.getNroMatricula());
-        Odontologo odontologoGuardado = iOdontologoRepository.save(odontologo);
-        return new OdontologoResponseDto(
-                odontologoGuardado.getId(),
-                odontologoGuardado.getNroMatricula(),
-                odontologoGuardado.getApellido(),
-                odontologoGuardado.getNombre()
-        );
+    public OdontologoResponseDto guardarOdontologo(OdontologoRequestDto Odontologo) {
+       Odontologo odontologoGuardado= iOdontologoRepository.save(modelMapper.map(Odontologo,Odontologo.class));
+       LOGGER.info("Odontologo guardado:",odontologoGuardado);
+       return modelMapper.map(odontologoGuardado,OdontologoResponseDto.class);
     }
 
     @Override
