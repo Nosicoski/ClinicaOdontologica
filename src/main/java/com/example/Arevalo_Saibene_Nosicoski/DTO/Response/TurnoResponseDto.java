@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class TurnoResponseDto {
-
     private Long id;
     private PacienteResponseDto pacienteResponseDto;
     private  OdontologoResponseDto odontologoResponseDto;

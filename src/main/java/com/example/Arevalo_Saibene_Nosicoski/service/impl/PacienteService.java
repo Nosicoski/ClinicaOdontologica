@@ -1,5 +1,6 @@
 package com.example.Arevalo_Saibene_Nosicoski.service.impl;
 
+import com.example.Arevalo_Saibene_Nosicoski.Utils.JsonPrinter;
 import com.example.Arevalo_Saibene_Nosicoski.model.Domicilio;
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Request.PacienteRequestDto;
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Response.PacienteResponseDto;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PacienteService implements IPacienteService {
@@ -30,20 +32,11 @@ public class PacienteService implements IPacienteService {
 
     @Override
     public PacienteResponseDto guardarPaciente(PacienteRequestDto pacienteRequestDto) {
-        LOGGER.info("Guardando paciente:");
 
-        // Convertir DomicilioRequestDto a Domicilio
-        Domicilio domicilio = modelMapper.map(pacienteRequestDto.getDomicilioRequestDto(), Domicilio.class);
 
-        // Crear el Paciente
-        Paciente paciente = modelMapper.map(pacienteRequestDto, Paciente.class);
-        paciente.setDomicilio(domicilio); // Asociar el domicilio al paciente
-
-        // Guardar el paciente en la base de datos
-        Paciente pacienteGuardado = pacienteRepository.save(paciente);
-        LOGGER.info("Paciente Guardado");
-
-        // Convertir el paciente guardado a PacienteResponseDto
+        LOGGER.info("Guardando paciente: {}", JsonPrinter.toString(pacienteRequestDto));
+        Paciente pacienteGuardado = pacienteRepository.save(modelMapper.map(pacienteRequestDto, Paciente.class));
+        LOGGER.info("Paciente guardado: {}", JsonPrinter.toString(pacienteGuardado));
         return modelMapper.map(pacienteGuardado, PacienteResponseDto.class);
     }
 
@@ -57,9 +50,11 @@ public class PacienteService implements IPacienteService {
 
     @Override
     public PacienteResponseDto buscarPorId(Long id) {
-        Paciente paciente = pacienteRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Paciente no encontrado con id: " + id));
-        return modelMapper.map(paciente, PacienteResponseDto.class);
+        return pacienteRepository.findById(id).map(paciente -> modelMapper.map(paciente, PacienteResponseDto.class
+        )).orElseGet(() -> {
+            LOGGER.info("No se encontró el paciente con id: {}", id);
+            return null;
+        });
     }
 
     @Override
@@ -84,11 +79,13 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
-    public void eliminarPaciente(Long id) {
+    public void eliminarPaciente(Long id ) {
+        Optional<Paciente> paciente = pacienteRepository.findById(id);
         if (pacienteRepository.findById(id).isEmpty()) {
             throw new ResourceNotFoundException("No se encontró el paciente a eliminar con id: " + id);
         }
         pacienteRepository.deleteById(id);
-        LOGGER.info("Paciente eliminado con id:" + id);
+       LOGGER.info("Paciente eliminado con id: " + id + " - Información del paciente: " + paciente);
+
     }
 }
