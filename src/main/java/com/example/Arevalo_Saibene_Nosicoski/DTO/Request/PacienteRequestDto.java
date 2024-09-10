@@ -17,6 +17,7 @@ public class PacienteRequestDto {
     private int dni;
     private LocalDate fechaIngreso;
     private DomicilioRequestDto domicilioRequestDto; // Nombre del campo debe coincidir con el JSON esperado
+
     public PacienteRequestDto(Paciente paciente) {
         this.nombre = paciente.getNombre();
         this.apellido = paciente.getApellido();
