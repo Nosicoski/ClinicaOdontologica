@@ -1,5 +1,4 @@
 package com.example.Arevalo_Saibene_Nosicoski.DTO.Response;
-import com.example.Arevalo_Saibene_Nosicoski.DTO.Response.DomicilioResponseDto;
 
 import lombok.*;
 
@@ -9,10 +8,10 @@ import lombok.*;
 @Setter
 @Builder
 public class DomicilioResponseDto {
-    private Integer id;//*
-    private String calle;//*
-    private int numero;//*
-    private String localidad;//*
-    private String provincia;//*
+    private Long id;
+    private String calle;
+    private int numero;
+    private String localidad;
+    private String provincia;
 
 }

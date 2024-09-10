@@ -23,5 +23,7 @@ public class OdontologoRequestDto {
 
     @NotBlank(message = "Nombre no puede estar vacío")
     private String nombre;
+    @NotBlank(message = "Domicilio no puede estar vacío")
+    private String domicilio;
 
 }
