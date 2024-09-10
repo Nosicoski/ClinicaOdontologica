@@ -15,5 +15,5 @@ public class ModelMapperConfig {
     @PostConstruct
     public void init() {
         System.out.println("ModelMapper bean created!");
-}
+    }
 }
