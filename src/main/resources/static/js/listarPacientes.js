@@ -21,14 +21,14 @@ document.addEventListener("DOMContentLoaded", function () {
         tbody.appendChild(fila);
     });
 });
-// Obtener la referencia a la tabla y al modal
+
 const tableBody = document.querySelector("#pacienteTable tbody");
 const editModal = new bootstrap.Modal(document.getElementById("editModal"));
 const editForm = document.getElementById("editForm");
 let currentPacienteId;
 let currentDomicilioId;
 
-// Función para obtener y mostrar los odontólogos
+
 function fetchPacientes() {
   // listar los pacientes
   fetch(`paciente/buscartodos`)

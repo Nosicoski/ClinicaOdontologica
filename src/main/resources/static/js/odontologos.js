@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    fetchOdontologos();
+    fetchOdontologos(); // Cargar los odontólogos al cargar la página
 });
 
 const odontologoForm = document.getElementById("odontologoForm");
@@ -7,8 +7,13 @@ const tableBody = document.querySelector("#odontologoTable tbody");
 
 // Función para listar los odontólogos
 function fetchOdontologos() {
-    fetch(`/odontologos/buscartodos`)
-        .then((response) => response.json())
+    fetch(`/Odontologo/buscartodos`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Error en la respuesta al listar odontólogos");
+            }
+            return response.json();
+        })
         .then((data) => {
             tableBody.innerHTML = ""; // Limpiar la tabla
 
@@ -17,9 +22,9 @@ function fetchOdontologos() {
 
                 row.innerHTML = `
                     <td>${index + 1}</td>
-                    <td>${odontologo.nombre}</td>
                     <td>${odontologo.apellido}</td>
-                    <td>${odontologo.matricula}</td>
+                    <td>${odontologo.nombre}</td>
+                    <td>${odontologo.nroMatricula}</td>
                     <td>
                         <button class="btn btn-danger" onclick="eliminarOdontologo(${odontologo.id})">Eliminar</button>
                     </td>
@@ -36,9 +41,9 @@ odontologoForm.addEventListener("submit", function (event) {
 
     const nombre = document.getElementById("nombre").value;
     const apellido = document.getElementById("apellido").value;
-    const matricula = document.getElementById("matricula").value;
+    const nroMatricula = document.getElementById("nroMatricula").value;
 
-    fetch(`/Odontologo/guardar`, {
+    fetch(`/Odontologo/guardar`, {  // Corregido el endpoint y el método fetch
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -46,10 +51,15 @@ odontologoForm.addEventListener("submit", function (event) {
         body: JSON.stringify({
             nombre: nombre,
             apellido: apellido,
-            matricula: matricula,
+            nroMatricula: nroMatricula,
         }),
     })
-    .then((response) => response.json())
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error("Error en la respuesta al agregar odontólogo");
+        }
+        return response.json();
+    })
     .then((data) => {
         console.log("Odontólogo agregado:", data);
         alert("Odontólogo agregado exitosamente");
@@ -59,9 +69,9 @@ odontologoForm.addEventListener("submit", function (event) {
 
         newRow.innerHTML = `
             <td>${tableBody.children.length + 1}</td>
-            <td>${data.nombre}</td>
             <td>${data.apellido}</td>
-            <td>${data.matricula}</td>
+            <td>${data.nombre}</td>
+            <td>${data.nroMatricula}</td>
             <td>
                 <button class="btn btn-danger" onclick="eliminarOdontologo(${data.id})">Eliminar</button>
             </td>
@@ -78,10 +88,13 @@ odontologoForm.addEventListener("submit", function (event) {
 // Función para eliminar un odontólogo
 function eliminarOdontologo(id) {
     if (confirm("¿Está seguro que desea eliminar este odontólogo?")) {
-        fetch(`/odontologos/eliminar/${id}`, {
+        fetch(`/Odontologo/eliminar/${id}`, {
             method: "DELETE",
         })
-        .then(() => {
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Error en la respuesta al eliminar odontólogo");
+            }
             alert("Odontólogo eliminado exitosamente");
             fetchOdontologos(); // Actualizar la lista después de eliminar
         })
