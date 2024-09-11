@@ -40,8 +40,7 @@ public class ControladorDePaciente {
 
     @GetMapping("/buscartodos")
     public ResponseEntity<List<PacienteResponseDto>> buscarTodos() {
-        List<PacienteResponseDto> pacientes = pacienteService.listarPacientes();
-        return ResponseEntity.ok(pacientes);
+        return new ResponseEntity<>(pacienteService.listarPacientes(), HttpStatus.OK);
     }
 
     @PutMapping("/modificar/{id}")
