@@ -26,7 +26,7 @@ form.addEventListener("submit", function (event) {
     },
   };
 
-  fetch(`paciente/guardar`, {
+  fetch(`${apiURL}/paciente/guardar`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
