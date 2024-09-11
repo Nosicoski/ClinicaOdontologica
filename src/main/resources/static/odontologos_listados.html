@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="agregarPaciente.css">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous"
+    />
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"
+    ></script>
+    <title>Odontologos Listados</title>
+</head>
+<body>
+<header>
+    <ul>
+        <li><a href="pacientes_listados.html">Pacientes Listados</a></li>
+        <li><a href="agregar_pacientes.html">Agregar Pacientes</a></li>
+    </ul>
+    <h1  > <a href="index.html">Clinica BocaSana</a> </h1>
+    <ul>
+        <li><a href="odontologos_listados.html">Odontólogos Listados</a></li>
+        <li><a href="agregar_odontologos.html">Agregar Odontólogos</a></li>
+    </ul>
+</header>
+<div class="container-xl">
+    <h1 class="mt-5">Odontologos</h1>
+    <table class="table table-striped-columns" id="odontologoTable">
+        <thead>
+        <tr>
+            <th>Orden</th>
+            <th>Apellido</th>
+            <th>Nombre</th>
+            <th>nroMatricula</th>
+            <th>Id</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<!-- Modal para editar odontologo -->
+<div
+        class="modal fade"
+        id="editModal"
+        tabindex="-1"
+        aria-labelledby="editModalLabel"
+        aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Modificar Odontologo</h5>
+                <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <div class="mb-3">
+                        <div class="mb-3">
+                            <label for="editApellido" class="form-label">Apellido</label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="editApellido"
+                                    required
+                            />
+                        </div>
+                        <label for="editNombre" class="form-label">Nombre</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="editNombre"
+                                required
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="editnroMatricula" class="form-label">nroMatricula</label>
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="editnroMatricula"
+                                required
+                        />
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary">
+                        Guardar cambios
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/listarOdontologos.js"></script>
+</body>
+</html>
