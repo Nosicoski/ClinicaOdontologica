@@ -69,8 +69,8 @@ public class PacienteService implements IPacienteService {
         paciente.setFechaIngreso(pacienteRequestDto.getFechaIngreso());
 
         // Maneja DomicilioRequestDto si es necesario
-        if (pacienteRequestDto.getDomicilioRequestDto() != null) {
-            Domicilio domicilio = modelMapper.map(pacienteRequestDto.getDomicilioRequestDto(), Domicilio.class);
+        if (pacienteRequestDto.getDomicilio() != null) {
+            Domicilio domicilio = modelMapper.map(pacienteRequestDto.getDomicilio(), Domicilio.class);
             paciente.setDomicilio(domicilio); // Actualizar el domicilio del paciente
         }
 

@@ -1,12 +1,34 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const pacientes = JSON.parse(localStorage.getItem("pacientes")) || [];
 
-// Obtener la referencia a la tabla y al modal
+    const tbody = document.querySelector("#pacienteTable tbody");
+
+    pacientes.forEach((paciente, index) => {
+        const fila = document.createElement("tr");
+
+        fila.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${paciente.apellido}</td>
+            <td>${paciente.nombre}</td>
+            <td>${paciente.dni}</td>
+            <td>${paciente.fecha}</td>
+            <td>${paciente.direccion.calle}</td>
+            <td>${paciente.direccion.numero}</td>
+            <td>${paciente.direccion.localidad}</td>
+            <td>${paciente.direccion.provincia}</td>
+        `;
+
+        tbody.appendChild(fila);
+    });
+});
+
 const tableBody = document.querySelector("#pacienteTable tbody");
 const editModal = new bootstrap.Modal(document.getElementById("editModal"));
 const editForm = document.getElementById("editForm");
 let currentPacienteId;
 let currentDomicilioId;
 
-// Función para obtener y mostrar los odontólogos
+
 function fetchPacientes() {
   // listar los pacientes
   fetch(`paciente/buscartodos`)
@@ -137,3 +159,4 @@ deletePaciente = function (id) {
 
 // Llamar a la función para obtener y mostrar los odontólogos
 fetchPacientes();
+
