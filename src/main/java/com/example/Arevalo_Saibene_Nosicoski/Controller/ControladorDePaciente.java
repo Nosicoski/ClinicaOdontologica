@@ -1,6 +1,5 @@
 package com.example.Arevalo_Saibene_Nosicoski.Controller;
 
-
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Request.PacienteRequestDto;
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Response.PacienteResponseDto;
 import com.example.Arevalo_Saibene_Nosicoski.exception.ResourceNotFoundException;
@@ -8,78 +7,68 @@ import com.example.Arevalo_Saibene_Nosicoski.model.Paciente;
 import com.example.Arevalo_Saibene_Nosicoski.service.impl.PacienteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
-import java.util.Optional;
-
 
 @RestController
-@RequestMapping ("/paciente")
-
+@RequestMapping("/paciente")
 public class ControladorDePaciente {
-    private PacienteService pacienteService;
+
+    private final PacienteService pacienteService;
 
     public ControladorDePaciente(PacienteService pacienteService) {
         this.pacienteService = pacienteService;
     }
-    // ingresa -> JSON -> jackson -> Objeto Paciente
-    // salga -> Objeto Paciente -> jackson -> JSON
+
     @PostMapping("/guardar")
-    public ResponseEntity<PacienteResponseDto> guardarPaciente(@RequestBody @Valid PacienteRequestDto pacienteRequestDto){
-        return ResponseEntity.ok(pacienteService.guardarPaciente(new PacienteRequestDto()));
+    public ResponseEntity<PacienteResponseDto> guardarPaciente(@RequestBody @Valid PacienteRequestDto pacienteRequestDto) {
+        PacienteResponseDto pacienteResponseDto = pacienteService.guardarPaciente(pacienteRequestDto);
+        return ResponseEntity.ok(pacienteResponseDto);
     }
 
     @GetMapping("/buscar/{id}")
-
-    public ResponseEntity<PacienteResponseDto> buscarPorId(@PathVariable Integer id){
-
-        PacienteResponseDto paciente = pacienteService.buscarPorId(1L);
-
-        if(paciente != null){
+    public ResponseEntity<PacienteResponseDto> buscarPorId(@PathVariable Long id) {
+        try {
+            PacienteResponseDto paciente = pacienteService.buscarPorId(id);
             return ResponseEntity.ok(paciente);
-        } else {
-             ResponseEntity.status(HttpStatus.NOT_FOUND).body("paciente no encontrado");
-            //ResponseEntity.notFound().build();
-            return ResponseEntity.status(HttpStatusCode.valueOf(404)).build();
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
     @GetMapping("/buscartodos")
-    public ResponseEntity<List<PacienteResponseDto>> buscarTodos(){
-        return ResponseEntity.ok(pacienteService.listarPacientes());
+    public ResponseEntity<List<PacienteResponseDto>> buscarTodos() {
+        return new ResponseEntity<>(pacienteService.listarPacientes(), HttpStatus.OK);
     }
 
-    @PutMapping("/modificar")
-    public ResponseEntity<?> modificarPaciente(@RequestBody Paciente paciente)
-    {
-        PacienteResponseDto pacienteEncontrado = pacienteService.buscarPorId(paciente.getId());
-
-        if(pacienteEncontrado!= null)
-
-        {
-            pacienteService.actualizarPaciente(new PacienteRequestDto(paciente), paciente.getId());
-            String jsonResponse = "{\"mensaje\": \"El paciente fue modificado\"}";
-            return ResponseEntity.ok(jsonResponse);
-        }
-
-        else {
-            return ResponseEntity.notFound().build();
+    @PutMapping("/modificar/{id}")
+    public ResponseEntity<String> modificarPaciente(@PathVariable Long id, @RequestBody @Valid PacienteRequestDto pacienteRequestDto) {
+        try {
+            PacienteResponseDto pacienteActualizado = pacienteService.actualizarPaciente(pacienteRequestDto, id);
+            return ResponseEntity.ok("{\"mensaje\": \"El paciente fue modificado\"}");
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("{\"mensaje\": \"Paciente no encontrado\"}");
         }
     }
 
     @DeleteMapping("/eliminar/{id}")
-
-    public ResponseEntity<String> eliminarPaciente(@PathVariable Long id) throws ResourceNotFoundException {
-        pacienteService.eliminarPaciente(id);
-        return new ResponseEntity<>("Se borro correctamente el paciente", HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> eliminarPaciente(@PathVariable Long id) {
+        try {
+            // Llama al servicio para eliminar el paciente
+            pacienteService.eliminarPaciente(id);
+            // Devuelve un estado 200 OK con un mensaje de confirmación
+            return ResponseEntity.ok("{\"mensaje\": \"Paciente eliminado con éxito\"}");
+        } catch (ResourceNotFoundException e) {
+            // Devuelve un estado 404 Not Found si el paciente no se encuentra
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"mensaje\": \"Paciente no encontrado\"}");
+        } catch (Exception e) {
+            // Devuelve un estado 500 Internal Server Error para otros errores inesperados
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"mensaje\": \"Error interno del servidor\"}");
+        }
     }
-    }
 
-
-
+}

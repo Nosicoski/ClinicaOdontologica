@@ -42,12 +42,6 @@ public class OdontologoService implements IOdontologoService {
     }
 
 
-
-
-
-
-
-
    @Override
     public OdontologoResponseDto guardarOdontologo(OdontologoRequestDto requestDto) {
         Odontologo odontologo = new Odontologo();

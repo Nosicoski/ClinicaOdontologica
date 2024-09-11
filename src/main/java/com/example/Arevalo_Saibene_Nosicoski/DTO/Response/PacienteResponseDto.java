@@ -15,5 +15,5 @@ public class PacienteResponseDto {
     private String apellido;
     private int dni;
     private LocalDate fechaIngreso;
-    private DomicilioResponseDto domicilioResponseDto;
+    private DomicilioResponseDto domicilio;
 }
