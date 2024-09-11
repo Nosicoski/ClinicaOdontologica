@@ -1,0 +1,53 @@
+header {
+    background-color: #a0522d;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 40px;
+}
+
+li {
+
+    display: inline;
+    margin: 0 10px;
+}
+
+a {
+     color: white;
+     text-decoration: none;
+     font-weight: bold;
+     transition: transform 0.3s ease;
+ }
+
+ a:hover {
+     transform: scale(1.1);
+     text-decoration: underline;
+ }
+
+ a:visited {
+     color: white;
+     text-decoration: none;
+ }
+
+ a:active {
+     color: white;
+     text-decoration: none;
+ }
+
+ a:focus {
+     outline: none;
+ }
+
+h1 {
+    font-size: 2em;
+}
