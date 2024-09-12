@@ -55,7 +55,7 @@ editForm.addEventListener("submit", function (event) {
   const id = document.getElementById("editId").value;
 
   // Modificar un odontólogo
-  fetch(`Odontologo/modificar`, {
+  fetch(`Odontologo/actualizar/${currentOdontologoId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
