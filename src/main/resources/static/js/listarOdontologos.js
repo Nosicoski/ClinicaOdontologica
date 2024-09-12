@@ -42,7 +42,7 @@ function editOdontologo(id, apellido, nombre, nroMatricula) {
   document.getElementById("editApellido").value = apellido;
   document.getElementById("editNombre").value = nombre;
   document.getElementById("editnroMatricula").value = nroMatricula;
-  document.getElementById("editId").value = id;
+  //document.getElementById("editId").value = id;
   editModal.show();
 }
 
@@ -52,16 +52,15 @@ editForm.addEventListener("submit", function (event) {
   const apellido = document.getElementById("editApellido").value;
   const nombre = document.getElementById("editNombre").value;
   const nroMatricula = document.getElementById("editnroMatricula").value;
-  const id = document.getElementById("editId").value;
+//  const id = document.getElementById("editId").value;
 
   // Modificar un odontólogo
-  fetch(`Odontologo/modificar`, {
+  fetch(`Odontologo/actualizar/${currentOdontologoId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      id: currentOdontologoId,
       nombre,
       apellido,
       nroMatricula,
