@@ -1,37 +1,15 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const pacientes = JSON.parse(localStorage.getItem("pacientes")) || [];
 
-    const tbody = document.querySelector("#pacienteTable tbody");
-
-    pacientes.forEach((paciente, index) => {
-        const fila = document.createElement("tr");
-
-        fila.innerHTML = `
-            <td>${index + 1}</td>
-            <td>${paciente.apellido}</td>
-            <td>${paciente.nombre}</td>
-            <td>${paciente.dni}</td>
-            <td>${paciente.fecha}</td>
-            <td>${paciente.direccion.calle}</td>
-            <td>${paciente.direccion.numero}</td>
-            <td>${paciente.direccion.localidad}</td>
-            <td>${paciente.direccion.provincia}</td>
-        `;
-
-        tbody.appendChild(fila);
-    });
-});
-
+// Obtener la referencia a la tabla y al modal
 const tableBody = document.querySelector("#pacienteTable tbody");
 const editModal = new bootstrap.Modal(document.getElementById("editModal"));
 const editForm = document.getElementById("editForm");
 let currentPacienteId;
 let currentDomicilioId;
 
-
+// Función para obtener y mostrar los odontólogos
 function fetchPacientes() {
   // listar los pacientes
-  fetch(`paciente/buscartodos`)
+  fetch("http://localhost:8080/paciente/buscartodos")
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -106,7 +84,7 @@ editForm.addEventListener("submit", function (event) {
   const provincia = document.getElementById("editProvincia").value;
 
   //modificar un paciente
-  fetch(`paciente/modificar`, {
+  fetch(`paciente/modificar/{id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -159,4 +137,3 @@ deletePaciente = function (id) {
 
 // Llamar a la función para obtener y mostrar los odontólogos
 fetchPacientes();
-
