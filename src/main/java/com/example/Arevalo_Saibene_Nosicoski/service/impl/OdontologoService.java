@@ -78,21 +78,20 @@ public class OdontologoService implements IOdontologoService {
                 .toList();
     }
     @Override
-    public OdontologoResponseDto actualizarOdontologo(Integer id, OdontologoRequestDto requestDto) {
-        Odontologo odontologo = iOdontologoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Odontólogo con ID " + id + " no encontrado"));
-                odontologo.setNroMatricula(requestDto.getNroMatricula());
-                odontologo.setApellido(requestDto.getApellido());
-                odontologo.setNombre(requestDto.getNombre());
-
-        Odontologo odontologoActualizado = iOdontologoRepository.save(odontologo);
-
-        return new OdontologoResponseDto(
-                odontologoActualizado.getId(),
-                odontologoActualizado.getNroMatricula(),
-                odontologoActualizado.getApellido(),
-                odontologoActualizado.getNombre()
-        );
+    public OdontologoResponseDto actualizarOdontologo( Integer id,OdontologoRequestDto odontologo) throws ResourceNotFoundException {
+        Optional<Odontologo> odontologoAActualizar = iOdontologoRepository.findById(id);
+        if (odontologoAActualizar.isPresent()) {
+            Odontologo odontologoActualizado = iOdontologoRepository.save(modelMapper.map(Odontologo.builder()
+                    .id(id)
+                    .apellido(odontologo.getApellido())
+                    .nombre(odontologo.getNombre())
+                    .nroMatricula(odontologo.getNroMatricula())
+                    .build(), Odontologo.class));
+            LOGGER.info("Odontologo actualizado: {}", odontologoActualizado);
+            return modelMapper.map(odontologoActualizado, OdontologoResponseDto.class);
+        } else {
+            throw new ResourceNotFoundException("No se encontró el odontologo a actualizar con id: " + id);
+        }
     }
 
 

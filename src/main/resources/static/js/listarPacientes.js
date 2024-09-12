@@ -9,7 +9,7 @@ let currentDomicilioId;
 // Función para obtener y mostrar los odontólogos
 function fetchPacientes() {
   // listar los pacientes
-  fetch(`paciente/buscartodos`)
+  fetch("http://localhost:8080/paciente/buscartodos")
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -84,7 +84,7 @@ editForm.addEventListener("submit", function (event) {
   const provincia = document.getElementById("editProvincia").value;
 
   //modificar un paciente
-  fetch(`paciente/modificar`, {
+  fetch(`paciente/modificar/{id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
