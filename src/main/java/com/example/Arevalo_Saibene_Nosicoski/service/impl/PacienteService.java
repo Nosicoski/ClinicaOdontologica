@@ -58,24 +58,15 @@ public class PacienteService implements IPacienteService {
     }
 
     @Override
-    public PacienteResponseDto actualizarPaciente(PacienteRequestDto pacienteRequestDto, Long id) throws ResourceNotFoundException {
-        Paciente paciente = pacienteRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Paciente no encontrado con id: " + id));
-
-        // Actualizar los campos del paciente con los datos del DTO
-        paciente.setNombre(pacienteRequestDto.getNombre());
-        paciente.setApellido(pacienteRequestDto.getApellido());
-        paciente.setDni(pacienteRequestDto.getDni());
-        paciente.setFechaIngreso(pacienteRequestDto.getFechaIngreso());
-
-        // Maneja DomicilioRequestDto si es necesario
-        if (pacienteRequestDto.getDomicilio() != null) {
-            Domicilio domicilio = modelMapper.map(pacienteRequestDto.getDomicilio(), Domicilio.class);
-            paciente.setDomicilio(domicilio); // Actualizar el domicilio del paciente
+    public PacienteResponseDto actualizarPaciente(PacienteRequestDto paciente, Long id) throws ResourceNotFoundException {
+        Optional<Paciente> pacienteAModificar = pacienteRepository.findById(id);
+        if (pacienteAModificar.isPresent()) {
+            Paciente pacienteModificado = pacienteRepository.save(modelMapper.map(crearPacienteAModificar(paciente,pacienteAModificar.get()), Paciente.class));
+            LOGGER.info("Paciente modificado: {}", pacienteModificado);
+            return modelMapper.map(pacienteModificado, PacienteResponseDto.class);
+        } else {
+            throw new ResourceNotFoundException("No se encontró el paciente a actualizar con id: " + id);
         }
-
-        Paciente pacienteActualizado = pacienteRepository.save(paciente);
-        return modelMapper.map(pacienteActualizado, PacienteResponseDto.class);
     }
 
     @Override
@@ -87,5 +78,21 @@ public class PacienteService implements IPacienteService {
         pacienteRepository.deleteById(id);
        LOGGER.info("Paciente eliminado con id: " + id + " - Información del paciente: " + paciente);
 
+    }
+    private Paciente crearPacienteAModificar(PacienteRequestDto pacienteEntradaDTO, Paciente pacienteExistente) {
+        return Paciente.builder()
+                .id(pacienteExistente.getId())
+                .nombre(pacienteEntradaDTO.getNombre())
+                .apellido(pacienteEntradaDTO.getApellido())
+                .dni(pacienteEntradaDTO.getDni())
+                .fechaIngreso(pacienteEntradaDTO.getFechaIngreso())
+                .domicilio(Domicilio.builder()
+                        .id(pacienteExistente.getDomicilio().getId())
+                        .calle(pacienteEntradaDTO.getDomicilio().getCalle())
+                        .numero(pacienteEntradaDTO.getDomicilio().getNumero())
+                        .localidad(pacienteEntradaDTO.getDomicilio().getLocalidad())
+                        .provincia(pacienteEntradaDTO.getDomicilio().getProvincia())
+                        .build())
+                .build();
     }
 }

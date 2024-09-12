@@ -11,7 +11,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "odontologo")
+@Table(name = "Odontologo")
 @Builder
 
 public class Odontologo {

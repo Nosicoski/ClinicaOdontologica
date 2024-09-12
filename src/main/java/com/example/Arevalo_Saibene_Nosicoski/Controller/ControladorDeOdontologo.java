@@ -48,6 +48,10 @@ public class ControladorDeOdontologo {
         odontologoService.eliminarOdontologoDto(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    @PutMapping ("/actualizar/{id}")
+    public ResponseEntity<OdontologoResponseDto>actualizarOdontologo(@RequestBody Integer id,OdontologoRequestDto odontologo) throws ResourceNotFoundException{
+        return new ResponseEntity<>(odontologoService.actualizarOdontologo(id, odontologo), HttpStatus.OK);
+    }
 
 }
 

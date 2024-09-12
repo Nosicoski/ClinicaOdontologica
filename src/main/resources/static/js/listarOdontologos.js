@@ -1,13 +1,12 @@
 // Obtener la referencia a la tabla y al modal
-const tableBody = document.querySelector("#odontologoTable tbody");
+const tableBody = document.querySelector("#OdontologoTable tbody");
 const editModal = new bootstrap.Modal(document.getElementById("editModal"));
 const editForm = document.getElementById("editForm");
 let currentOdontologoId;
 
-
-function fetchOdontologos() {
-  // listar los odontologos
-  fetch(`Odontologo/buscartodos`)
+function fetchOdontologo() {
+  // Listar los odontólogos
+  fetch(`Odontologo/ListarTodos`)
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
@@ -15,19 +14,19 @@ function fetchOdontologos() {
       tableBody.innerHTML = "";
 
       // Insertar los datos en la tabla
-      data.forEach((odontologoTable, index) => {
+      data.forEach((odontologo) => {
         const row = document.createElement("tr");
 
         row.innerHTML = `
-              <td>${odontologo.id}</td>
-              <td>${odontologo.apellido}</td>
-              <td>${odontologo.nombre}</td>
-              <td>${odontologo.nroMatricula}</td>
-
-                <button class="btn btn-primary btn-sm" onclick="editOdontologo(${Odontologo.id}, '${Odontologo.apellido}','${Odontologo.nombre}', '${Odontologo.nroMatricula}',">Modificar</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteOdontologo(${Odontologo.id})">Eliminar</button>
-              </td>
-            `;
+          <td>${odontologo.apellido}</td>
+          <td>${odontologo.nombre}</td>
+          <td>${odontologo.nroMatricula}</td>
+          <td>${odontologo.id}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" onclick="editOdontologo(${odontologo.id}, '${odontologo.apellido}', '${odontologo.nombre}', '${odontologo.nroMatricula}')">Modificar</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteOdontologo(${odontologo.id})">Eliminar</button>
+          </td>
+        `;
 
         tableBody.appendChild(row);
       });
@@ -37,71 +36,67 @@ function fetchOdontologos() {
     });
 }
 
-// Función para abrir el modal y cargar los datos del paciente
-editPaciente = function (
-  apellido,
-  nombre,
-  nroMatricula,
-  Id,
-) {
-  currentodontologoId = id;
-  currentDomicilioId = idDomicilio;
+// Función para abrir el modal y cargar los datos del odontólogo
+function editOdontologo(id, apellido, nombre, nroMatricula) {
+  currentOdontologoId = id;
   document.getElementById("editApellido").value = apellido;
   document.getElementById("editNombre").value = nombre;
-  document.getElementById("editnroMatricula").value = dni;
-  document.getElementById("editId").value = fechaIngreso;
+  document.getElementById("editnroMatricula").value = nroMatricula;
+  document.getElementById("editId").value = id;
+  editModal.show();
+}
 
-};
-
-// Función para editar un paciente
+// Función para editar un odontólogo
 editForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const apellido = document.getElementById("editApellido").value;
   const nombre = document.getElementById("editNombre").value;
   const nroMatricula = document.getElementById("editnroMatricula").value;
-  const Id = document.getElementById("editId").value;
+  const id = document.getElementById("editId").value;
 
-  //modificar un paciente
-  fetch(`odontologo/modificar`, {
+  // Modificar un odontólogo
+  fetch(`Odontologo/modificar`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      id: currentodontologoIdId,
+      id: currentOdontologoId,
       nombre,
       apellido,
       nroMatricula,
-
-      },)
+    }),
+  })
     .then((response) => response.json())
     .then((data) => {
       console.log(data);
-      alert("odontologo modificado con éxito");
-      fetchPacientes();
+      alert("Odontólogo modificado con éxito");
+      fetchOdontologo();
       editModal.hide();
     })
     .catch((error) => {
-      console.error("Error editando odontologo:", error);
-    })
+      console.error("Error editando odontólogo:", error);
+    });
 });
 
-// Función para eliminar un paciente
-deleteOdontologo = function (id) {
-  if (confirm("¿Está seguro de que desea eliminar este odontologo?")) {
-    // eliminar el paciente
-    fetch(`odontologo/eliminar/${id}`, {
+// Función para eliminar un odontólogo
+function deleteOdontologo(id) {
+  if (confirm("¿Está seguro de que desea eliminar este odontólogo?")) {
+    // Eliminar el odontólogo
+    fetch(`Odontologo/eliminar/${id}`, {
       method: "DELETE",
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        alert("odontologo eliminado con éxito");
-        fetchPacientes();
+        alert("Odontólogo eliminado con éxito");
+        fetchOdontologo();
       })
       .catch((error) => {
-        console.error("Error borrando odontologo:", error);
+        console.error("Error borrando odontólogo:", error);
       });
   }
-};
-})
+}
+
+// Llamar a fetchOdontologo al cargar la página para listar los odontólogos
+document.addEventListener("DOMContentLoaded", fetchOdontologo);
