@@ -70,24 +70,33 @@ public class TurnoControllerTest {
 
     @Test
     public void testRegistrarTurnoInvalido() throws Exception {
-        // Configura el objeto de prueba con datos inválidos
-        TurnoRequestDto requestDto = new TurnoRequestDto();
-        // (Optional) Añade valores inválidos o deja los campos requeridos vacíos
-        // e.g., requestDto.setFecha(""); // If fecha is required
+        String json = "{ \"odontologo_id\": null, \"paciente_id\": null, \"fecha\": null }";
 
-        // Configura el objeto ObjectMapper
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        // Convierte el objeto a JSON
-        String jsonRequest = objectMapper.writeValueAsString(requestDto);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/turnos/registrar")
+        mockMvc.perform(post("/Turno/guardar")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonRequest)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andDo(print()) // Helps with debugging by printing the request and response
-                .andExpect(status().isBadRequest()); // Asserts that the response status is 400 Bad Request
+                        .content(json))
+                .andExpect(status().isBadRequest());
     }
+
+    @Test
+    public void testListarTurnos() throws Exception {
+        mockMvc.perform(get("/Turno/listar"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testBuscarTurnoPorId() throws Exception {
+        mockMvc.perform(get("/Turno/1"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testEliminarTurno() throws Exception {
+        mockMvc.perform(delete("/Turno/1"))
+                .andExpect(status().isNoContent());
+    }
+
+   
 
 
 }
