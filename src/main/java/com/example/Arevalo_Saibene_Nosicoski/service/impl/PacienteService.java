@@ -80,19 +80,22 @@ public class PacienteService implements IPacienteService {
 
     }
     private Paciente crearPacienteAModificar(PacienteRequestDto pacienteEntradaDTO, Paciente pacienteExistente) {
+        Domicilio domicilioExistente = pacienteExistente.getDomicilio();
+
         return Paciente.builder()
                 .id(pacienteExistente.getId())
                 .nombre(pacienteEntradaDTO.getNombre())
                 .apellido(pacienteEntradaDTO.getApellido())
                 .dni(pacienteEntradaDTO.getDni())
                 .fechaIngreso(pacienteEntradaDTO.getFechaIngreso())
-                .domicilio(Domicilio.builder()
-                        .id(pacienteExistente.getDomicilio().getId())
+                .domicilio(domicilioExistente != null ? Domicilio.builder()
+                        .id(domicilioExistente.getId())
                         .calle(pacienteEntradaDTO.getDomicilio().getCalle())
                         .numero(pacienteEntradaDTO.getDomicilio().getNumero())
                         .localidad(pacienteEntradaDTO.getDomicilio().getLocalidad())
                         .provincia(pacienteEntradaDTO.getDomicilio().getProvincia())
-                        .build())
+                        .build() : null)
                 .build();
     }
+
 }

@@ -1,8 +1,10 @@
 package com.example.Arevalo_Saibene_Nosicoski.Controller;
 
+import java.util.List;
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Request.TurnoRequestDto;
 import com.example.Arevalo_Saibene_Nosicoski.DTO.Response.TurnoResponseDto;
 import com.example.Arevalo_Saibene_Nosicoski.exception.BadRequestException;
+import com.example.Arevalo_Saibene_Nosicoski.exception.ResourceNotFoundException;
 import com.example.Arevalo_Saibene_Nosicoski.service.ITurnoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +31,46 @@ public class ControladorDeTurnos {
             return new ResponseEntity<>(turnoResponseDto, HttpStatus.CREATED);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Otros métodos del controlador...
+    @GetMapping("/listar")
+    public ResponseEntity<List<TurnoResponseDto>> listarTurnos() {
+        List<TurnoResponseDto> turnos = turnoService.listarTurnos();
+        return new ResponseEntity<>(turnos, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TurnoResponseDto> buscarTurnoPorId(@PathVariable Integer id) {
+        try {
+            TurnoResponseDto turno = turnoService.buscarTurnoPorId(id);
+            return new ResponseEntity<>(turno, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminarTurno(@PathVariable Integer id) {
+        try {
+            turnoService.eliminarTurno(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TurnoResponseDto> actualizarTurno(@PathVariable Integer id, @RequestBody @Valid TurnoRequestDto turnoRequestDto) {
+        try {
+            TurnoResponseDto turnoActualizado = turnoService.actualizarTurno(turnoRequestDto, id);
+            return new ResponseEntity<>(turnoActualizado, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

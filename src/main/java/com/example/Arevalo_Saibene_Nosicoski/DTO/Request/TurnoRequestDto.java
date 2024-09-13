@@ -2,6 +2,8 @@ package com.example.Arevalo_Saibene_Nosicoski.DTO.Request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 
 public class TurnoRequestDto {
 
