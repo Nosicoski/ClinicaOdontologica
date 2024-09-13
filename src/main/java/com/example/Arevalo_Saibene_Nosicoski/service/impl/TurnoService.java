@@ -88,7 +88,6 @@ public class TurnoService implements ITurnoService {
         }
     }
 
-
     @Override
     public List<TurnoResponseDto> listarTurnos() {
         return turnoRepository.findAll()
