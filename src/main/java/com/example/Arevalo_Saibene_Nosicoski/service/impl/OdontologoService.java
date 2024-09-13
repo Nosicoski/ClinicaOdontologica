@@ -25,13 +25,13 @@ import static org.springframework.boot.autoconfigure.liquibase.LiquibaseProperti
 public class OdontologoService implements IOdontologoService {
     private ModelMapper modelMapper;
     private final IOdontologoRepository iOdontologoRepository;
-    private final Logger LOGGER = LoggerFactory.getLogger(OdontologoService.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(PacienteService.class);
 
-        public OdontologoService(ModelMapper modelMapper, IOdontologoRepository iOdontologoRepository) {
-            this.modelMapper = modelMapper;
-            this.iOdontologoRepository = iOdontologoRepository;
+    public OdontologoService(ModelMapper modelMapper, IOdontologoRepository iOdontologoRepository) {
+        this.modelMapper = modelMapper;
+        this.iOdontologoRepository = iOdontologoRepository;
 
-        }
+    }
 
 
     @Override
@@ -42,7 +42,7 @@ public class OdontologoService implements IOdontologoService {
     }
 
 
-   @Override
+    @Override
     public OdontologoResponseDto guardarOdontologo(OdontologoRequestDto requestDto) {
         Odontologo odontologo = new Odontologo();
         odontologo.setApellido(requestDto.getApellido());
