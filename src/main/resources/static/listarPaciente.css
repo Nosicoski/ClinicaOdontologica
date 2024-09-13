@@ -1,11 +1,21 @@
+body {
+    padding: 30px 0px 0px 0px;
+    background-image: url('https://img.freepik.com/vector-premium/patron-dental-simple-ilustracion-plana-dientes-sobre-fondo-azul_539731-95.jpg');
+    background-size: auto;
+    background-position: center;
+    background-repeat: repeat;
+    font-family: Arial, sans-serif;
+}
+
 header {
     background-color: #a0522d;
     color: white;
-    padding: 20px;
+    padding: 5px 20px 5px 5px;
     text-align: center;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 120px;
 }
 
 ul {
@@ -17,7 +27,6 @@ ul {
 }
 
 li {
-
     display: inline;
     margin: 0 10px;
 }
@@ -48,6 +57,17 @@ a {
      outline: none;
  }
 
-h1 {
-    font-size: 2em;
+ h1 {
+    font-size:xx-small;
+    color:black;
+    font-weight:bolder;
+    font-family: Arial, sans-serif;
+}
+
+h2{
+    font-size: 1em;
+    color:black;
+    font-weight:bolder;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.534);
 }
