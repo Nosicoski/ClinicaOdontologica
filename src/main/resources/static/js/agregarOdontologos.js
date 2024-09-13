@@ -6,7 +6,7 @@ form.addEventListener("submit", function (event) {
   const apellido = document.getElementById("apellido").value;
   const nombre = document.getElementById("nombre").value;
   const nroMatricula = document.getElementById("nroMatricula").value;
-  const Id = document.getElementById("Id").value;
+  /*const Id = document.getElementById("Id").value;*/
 
 
   // llamando al endpoint de agregar
@@ -14,7 +14,7 @@ form.addEventListener("submit", function (event) {
     nombre,
     apellido,
     nroMatricula,
-    Id
+    /*Id*/
     };
 
 
