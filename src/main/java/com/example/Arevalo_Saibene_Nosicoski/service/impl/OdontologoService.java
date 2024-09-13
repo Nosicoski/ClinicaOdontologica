@@ -25,7 +25,7 @@ import static org.springframework.boot.autoconfigure.liquibase.LiquibaseProperti
 public class OdontologoService implements IOdontologoService {
     private ModelMapper modelMapper;
     private final IOdontologoRepository iOdontologoRepository;
-    private final Logger LOGGER = LoggerFactory.getLogger(PacienteService.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(OdontologoService.class);
 
         public OdontologoService(ModelMapper modelMapper, IOdontologoRepository iOdontologoRepository) {
             this.modelMapper = modelMapper;
