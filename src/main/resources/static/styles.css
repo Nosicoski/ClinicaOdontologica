@@ -9,7 +9,7 @@ body {
 }
 
 header {
-    background-color: #a0522d;
+    background-color: #67a8d3;
     color: white;
     padding: 5px 20px 5px 5px;
     text-align: center;
@@ -82,7 +82,7 @@ h2{
 }
 
 .card {
-    background-color: #d2b48c;
+    background-color: #95b1b8;
     border: 2px solid black;
     border-radius: 10px;
     padding: 20px;
@@ -103,7 +103,7 @@ h2{
 }
 
 .card h3 {
-    color: #8b4513;
+    color: #2123c4;
 }
 
 .card p {
@@ -112,7 +112,7 @@ h2{
 }
 
 .card button {
-    background-color: #8b4513;
+    background-color: #67a8d3;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -121,5 +121,5 @@ h2{
 }
 
 .card button:hover {
-    background-color: #a0522d;
+    background-color: #2123c4;
 }
