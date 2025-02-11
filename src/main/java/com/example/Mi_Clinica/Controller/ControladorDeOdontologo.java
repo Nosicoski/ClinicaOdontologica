@@ -16,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping ("/Odontologo")
 public class ControladorDeOdontologo {
+
     private IOdontologoService odontologoService;
 
     public ControladorDeOdontologo(OdontologoService odontologService) {

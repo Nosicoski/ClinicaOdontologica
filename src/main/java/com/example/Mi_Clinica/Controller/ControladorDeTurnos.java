@@ -42,7 +42,7 @@ public class ControladorDeTurnos {
         return new ResponseEntity<>(turnos, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/buscar/{id}")
     public ResponseEntity<TurnoResponseDto> buscarTurnoPorId(@PathVariable Integer id) {
         try {
             TurnoResponseDto turno = turnoService.buscarTurnoPorId(id);
@@ -52,7 +52,7 @@ public class ControladorDeTurnos {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarTurno(@PathVariable Integer id) {
         try {
             turnoService.eliminarTurno(id);
@@ -62,7 +62,7 @@ public class ControladorDeTurnos {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     public ResponseEntity<TurnoResponseDto> actualizarTurno(@PathVariable Integer id, @RequestBody @Valid TurnoRequestDto turnoRequestDto) {
         try {
             TurnoResponseDto turnoActualizado = turnoService.actualizarTurno(turnoRequestDto, id);
